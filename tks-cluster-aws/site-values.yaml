@@ -1,0 +1,41 @@
+apiVersion: openinfradev.github.com/v1
+kind: HelmValuesTransformer
+metadata:
+  name: site
+
+global:
+  # Specify cluster name. It is useful in multi-cluster env.
+  clusterName: TO_BE_FIXED
+
+charts:
+- name: cluster-api-aws
+  override:
+    sshKeyName: taco
+    cluster.name: $(clusterName)
+    cluster.region: TO_BE_FIXED
+    cluster.bastion.enabled: false
+    kubeadmControlPlane.controlPlaneMachineType: t3.medium
+    machinePool:
+    - name: taco
+      machineType: t3.2xlarge
+      replicas: 3
+      minSize: 1
+      maxSize: 16
+      rootVolume:
+        size: 200
+        type: gp2
+      labels:
+        taco-lma: enabled
+        servicemesh: enabled
+        taco-ingress-gateway: enabled
+    job.taconode.enabled: true
+    job.argo.enabled: true
+    job.argo.url: argocd-v2.taco-cat.xyz
+    job.argo.password: aFgSFwjtrBRwKgci
+  
+- name: kubernetes-addons
+  override:
+    cni.calico.enabled: true
+    csi.aws-ebs.enabled: true
+- name: ingress-nginx
+  override:
