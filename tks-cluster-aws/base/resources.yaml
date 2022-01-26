@@ -32,6 +32,7 @@ spec:
         size: 20 # GB
         type: gp2
     machinePool: []
+    machineDeployment: []
     job:
       taconode:
         enabled: true
