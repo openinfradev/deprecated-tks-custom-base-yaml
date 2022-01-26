@@ -19,7 +19,7 @@ spec:
     cluster:
       name: TO_BE_FIXED
       region: TO_BE_FIXED
-      kubernetesVersion: v1.20.8
+      kubernetesVersion: v1.22.5
       podCidrBlocks:
       - 10.10.0.0/16
       bastion:
