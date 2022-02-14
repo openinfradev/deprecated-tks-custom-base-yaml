@@ -84,7 +84,7 @@ spec:
     type: helmrepo
     repository: https://kubernetes.github.io/ingress-nginx
     name: ingress-nginx
-    version: 3.36.0
+    version: 4.0.17
   releaseName: ingress-nginx
   targetNamespace: taco-system
   values:
