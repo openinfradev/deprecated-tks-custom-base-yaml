@@ -37,5 +37,11 @@ charts:
   override:
     cni.calico.enabled: true
     csi.aws-ebs.enabled: true
+
 - name: ingress-nginx
   override:
+
+- name: cluster-autoscaler
+  override:
+    discoveryNamespace: $(clusterName)
+    discoveryClusterName: $(clusterName)
