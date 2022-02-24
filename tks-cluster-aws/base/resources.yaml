@@ -76,6 +76,32 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   labels:
+    name: aws-ebs-csi-driver
+  name: aws-ebs-csi-driver
+spec:
+  helmVersion: v3
+  chart:
+    type: helmrepo
+    repository: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+    name: aws-ebs-csi-driver
+    version: 2.6.3
+  releaseName: aws-ebs-csi-driver
+  targetNamespace: kube-system
+  values:
+    storageClasses:
+    - name: taco-storage
+      annotations:
+        storageclass.kubernetes.io/is-default-class: "true"
+      volumeBindingMode: WaitForFirstConsumer
+      parameters:
+        encrypted: "true"
+        type: gp3
+  wait: true
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  labels:
     name: ingress-nginx
   name: ingress-nginx
 spec:
