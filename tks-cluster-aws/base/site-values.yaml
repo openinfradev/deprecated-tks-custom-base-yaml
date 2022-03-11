@@ -13,7 +13,10 @@ charts:
     sshKeyName: taco
     cluster.name: $(clusterName)
     cluster.region: TO_BE_FIXED
-    cluster.bastion.enabled: false
+    cluster.bastion.enabled: true
+    cluster.bastion.instanceType: t3.micro
+    cluster.bastion.allowedCIDRBlocks: ['127.0.0.1/32']
+    cluster.bastion.useSpotInstance.enabled: true
     kubeadmControlPlane.controlPlaneMachineType: t3.medium
     machinePool:
     - name: taco
