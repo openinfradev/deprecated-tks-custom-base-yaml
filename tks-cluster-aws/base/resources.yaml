@@ -23,8 +23,12 @@ spec:
       podCidrBlocks:
       - 10.10.0.0/16
       bastion:
-        enabled: TO_BE_FIXED
+        enabled: true
         instanceType: t3.micro
+        allowedCIDRBlocks:
+        - 127.0.0.1/32
+        useSpotInstance:
+          enabled: true
     kubeadmControlPlane:
       replicas: 3
       controlPlaneMachineType: TO_BE_FIXED
