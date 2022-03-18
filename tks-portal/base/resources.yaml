@@ -1,0 +1,41 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  labels:
+    name: tks-portal
+  name: tks-portal
+spec:
+  helmVersion: v3
+  chart:
+    type: helmrepo
+    repository: https://ktkfree.github.io/test-helm-chart
+    name: tks-portal
+    version: 0.1.0
+  releaseName: tks-portal
+  targetNamespace: tks-portal
+  values:
+    application:
+      spring:
+        profiles:
+          active: prod,log
+      server:
+        port: 8080
+      tks:
+        admin:
+          username: admin
+          password: exntu-admin
+        url: https://dashboard-awsk1.taco-cat.xyz
+      harbor:
+        url: https://harbor-awsk1.taco-cat.xyz
+      keycloak:
+        realm: exntu
+        resource: portal
+        credentials:
+          secret: TO_BE_FIXED
+        auth-server-url: https://keycloak-awsk1.taco-cat.xyz/auth
+    service:
+      type: ClusterIP
+      port: 9110
+      containerPort: 8080
+
+  wait: true
