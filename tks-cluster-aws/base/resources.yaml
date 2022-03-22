@@ -228,7 +228,7 @@ spec:
     name: metrics-server
     version: 3.8.2
   releaseName: metrics-server
-  targetNamespace: lma
+  targetNamespace: kube-system
   values:
     image:
       repository: k8s.gcr.io/metrics-server/metrics-server
