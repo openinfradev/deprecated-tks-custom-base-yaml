@@ -183,7 +183,7 @@ spec:
     type: helmrepo
     repository: https://openinfradev.github.io/helm-repo
     name: cluster-autoscaler
-    version: 0.1.0
+    version: 0.2.0
   releaseName: cluster-autoscaler
   targetNamespace: kube-system
   values:
@@ -191,6 +191,27 @@ spec:
     discoveryNamespace: TO_BE_FIXED
     discoveryClusterName: TO_BE_FIXED
     mgmtKubeconfigSecretName: mgmt-kubeconfig
+  wait: true
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  labels:
+    name: cluster-autoscaler-rbac
+  name: cluster-autoscaler-rbac
+spec:
+  helmVersion: v3
+  chart:
+    type: helmrepo
+    repository: https://openinfradev.github.io/helm-repo
+    name: cluster-autoscaler
+    version: 0.2.0
+  releaseName: cluster-autoscaler-rbac
+  targetNamespace: argo
+  values:
+    deployMgmtRbacOnly:
+      enabled: true
+      targetNamespace: TO_BE_FIXED
   wait: true
 ---
 apiVersion: helm.fluxcd.io/v1
