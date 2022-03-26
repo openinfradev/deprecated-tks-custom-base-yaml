@@ -86,9 +86,9 @@ spec:
   helmVersion: v3
   chart:
     type: helmrepo
-    repository: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+    repository: https://openinfradev.github.io/helm-repo
     name: aws-ebs-csi-driver
-    version: 2.6.3
+    version: 2.6.4-skt
   releaseName: aws-ebs-csi-driver
   targetNamespace: kube-system
   values:
@@ -100,6 +100,7 @@ spec:
       parameters:
         encrypted: "true"
         type: gp3
+    snapshotterSidecarEnabled: true
   wait: true
 ---
 apiVersion: helm.fluxcd.io/v1
