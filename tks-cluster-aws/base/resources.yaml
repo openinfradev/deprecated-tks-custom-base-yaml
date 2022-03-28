@@ -119,16 +119,35 @@ spec:
   targetNamespace: taco-system
   values:
     controller:
-      hostPort:
-        enabled: true
+      replicaCount: 2
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - ingress-nginx
+              topologyKey: "kubernetes.io/hostname"
+      nodeSelector:
+        app.kubernetes.io/name: ingress-nginx
       service:
         externalTrafficPolicy: Local
-        nodePorts:
-          http: 32080
-          https: 32443
-          tcp:
-            "10254": 32081
-        type: NodePort
+        annotations:
+          service.beta.kubernetes.io/aws-load-balancer-name: "taco-ingress-nlb"
+          service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+          service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+        type: LoadBalancer
+      config:
+        enable-underscores-in-headers: "true"
+        use-proxy-protocol: "false"
+        enable-real-ip: "true"
+        proxy-body-size: "10m"
+      hostPort:
+        enabled: true
     tcp:
       "10254": 10254:healthz
   wait: true
