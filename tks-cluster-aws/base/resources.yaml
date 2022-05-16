@@ -71,9 +71,8 @@ spec:
     cni:
       calico:
         enabled: true
-    csi:
-      aws-ebs:
-        enabled: false
+    storageclass:
+        enabled: true
   wait: true
 ---
 apiVersion: helm.fluxcd.io/v1
@@ -92,14 +91,6 @@ spec:
   releaseName: aws-ebs-csi-driver
   targetNamespace: kube-system
   values:
-    storageClasses:
-    - name: taco-storage
-      annotations:
-        storageclass.kubernetes.io/is-default-class: "true"
-      volumeBindingMode: WaitForFirstConsumer
-      parameters:
-        encrypted: "true"
-        type: gp3
     snapshotterSidecarEnabled: true
   wait: true
 ---
@@ -133,8 +124,6 @@ spec:
                   values:
                   - ingress-nginx
               topologyKey: "kubernetes.io/hostname"
-      nodeSelector:
-        app.kubernetes.io/name: ingress-nginx
       service:
         externalTrafficPolicy: Local
         annotations:

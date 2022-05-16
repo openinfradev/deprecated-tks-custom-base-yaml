@@ -39,7 +39,7 @@ charts:
 - name: kubernetes-addons
   override:
     cni.calico.enabled: true
-    csi.aws-ebs.enabled: true
+    storageclass.enabled: true
 
 - name: ingress-nginx
   override:
